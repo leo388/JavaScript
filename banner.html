@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	*{margin:0px; padding:0px;}
+	body{background-color: #EAEAEA;}
+	a{text-decoration: none; font-size: 50px; display: block; background: #7B799C; border-radius: 20%; position: absolute; color:#FFF; width: 50px;line-height: 50px; text-align:center; top: 175px;}
+	.prev{left:10px; }
+	.next{right:10px; }
+	ul{position: relative;}
+	ul li{list-style: none;}
+	#box{width: 800px; height: 400px; position: relative;margin:100px auto; border:3px solid gray;}
+	#box #pbox{width: 800px; font-size: 100px; line-height: 400px; text-align: center; }
+	#box #pbox li{ width: 800px;height: 400px; display: none; background-image: url(img/a.jpg);}
+
+	#libox{width: 148px; height: 35px; background-color: #6B6B9C; position: absolute; left: 320px; bottom: 0px; padding-left: 24px; border-radius: 35px;}
+	#libox li{width: 30px; height: 30px; border-radius: 100%; border:2px solid #FBF498; margin:0.5px 10px auto 0px; float: left; cursor: pointer;}
+	.active{background-color: #FDFDFD;}
+
+	#info{display: block; width: 800px; height: 80px; position: absolute; background-color: #252525; bottom: 0px; left: 0px; opacity: 0.6;
+			color: #FFF; font-size: 50px; }
+</style>
+<body>
+	<div id="box">
+		<ul id="pbox">
+			<li style="display:block"></li>
+			<li></li>
+			<li></li>
+		</ul>
+		
+		<p id="info">秋天落叶</p>
+		
+		<ul id="libox">
+			<li date-index="0" class="active"</li>
+			<li date-index="1"></li>
+			<li date-index="2"></li>
+		</ul>
+
+		<a href="#" class="prev">&lt;</a>
+		<a href="#" class="next">&gt;</a>
+	</div>
+</body>
+<script type="text/javascript">
+	var obox = document.getElementById('box'),
+		opbox = document.getElementById('pbox'),
+		pic = opbox.getElementsByTagName('li'),
+		olibox = document.getElementById('libox'),
+		lis = olibox.getElementsByTagName('li'),
+		otext = document.getElementById('info'),
+		prev = obox.getElementsByTagName('a')[0];
+		next = obox.getElementsByTagName('a')[1];
+		
+//------------------------------------------------------
+		var a = 0;
+		var srcs = [ "img/a.jpg","img/d.jpg","img/s.jpg" ];
+		var	texts = ["秋天落叶","法国巴黎","维港景色"];
+
+		function rota()
+				{
+					for(var j = 0; j < lis.length; j++)
+					{
+						pic[j].style.display = 'none';
+						lis[j].className = '';
+					
+						pic[a].style.display = 'block';
+						lis[a].className = 'active';
+						pic[a].style.backgroundImage = 'url('+ srcs[a] +')';
+						otext.textContent = texts[a]; 
+					}
+				}
+
+		for(var i = 0; i < lis.length; i++)
+		{
+			lis[i].addEventListener('click',change,false);
+
+			function change()
+			{
+				a = this.getAttribute('date-index');
+
+				rota();
+			}
+		}
+//-----------------------------------------------------------------------------
+		prev.addEventListener('click',back,false);
+		next.addEventListener('click',go,false);
+
+		function back()
+		{	
+			a<1 ? a = lis.length-1 : a--
+			
+			rota();
+		}
+
+		function go()
+		{
+			a>lis.length-2 ? a = 0 : a++
+			
+			rota();
+		}
+
+		
+
+</script>
+</html>
